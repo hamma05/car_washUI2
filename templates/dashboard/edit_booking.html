@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Modifier la réservation #{{ booking.pk }}{% endblock %}
+
+{% block content %}
+<div class="pt-20 min-h-screen flex flex-col md:flex-row max-w-container-max mx-auto px-gutter gap-lg">
+    <aside class="w-full md:w-64 py-xl shrink-0">
+        <nav class="flex flex-col gap-sm">
+            <a href="{% url 'dashboard' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
+                <span class="material-symbols-outlined">dashboard</span>
+                Vue d'ensemble
+            </a>
+            <a href="{% url 'manage_bookings' %}" class="flex items-center gap-md p-md rounded-xl bg-primary-container text-on-primary-fixed-variant font-label-md no-underline">
+                <span class="material-symbols-outlined">calendar_month</span>
+                Réservations
+            </a>
+            <a href="{% url 'manage_services' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
+                <span class="material-symbols-outlined">build</span>
+                Services
+            </a>
+            <hr class="my-md border-outline-variant/30">
+            <a href="{% url 'home' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Voir le site
+            </a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 py-xl">
+        <div class="flex items-center justify-between mb-lg">
+            <h1 class="text-headline-lg text-primary font-bold">Modifier #{{ booking.pk }}</h1>
+            <a href="{% url 'manage_bookings' %}" class="text-on-surface-variant hover:text-primary transition-all font-label-md no-underline flex items-center gap-xs">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Retour
+            </a>
+        </div>
+
+        <div class="max-w-lg bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-lg">
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="mb-md">
+                    <label for="{{ field.id_for_label }}" class="text-label-md text-primary block mb-xs">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <div class="mt-xs text-sm text-error">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <div class="flex gap-md pt-md border-t border-outline-variant/10">
+                    <button type="submit" class="bg-primary text-on-primary px-lg py-sm rounded-xl font-label-md hover:shadow-lg active:scale-95 transition-all">Enregistrer</button>
+                    <a href="{% url 'manage_bookings' %}" class="border border-outline-variant text-on-surface px-lg py-sm rounded-xl font-label-md hover:bg-surface-container transition-all no-underline">Annuler</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+{% endblock %}

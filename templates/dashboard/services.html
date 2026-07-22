@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Gestion des services — HBIBWASH{% endblock %}
+
+{% block content %}
+<div class="pt-20 min-h-screen flex flex-col md:flex-row max-w-container-max mx-auto px-gutter gap-lg">
+    <aside class="w-full md:w-64 py-xl shrink-0">
+        <nav class="flex flex-col gap-sm">
+            <a href="{% url 'dashboard' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
+                <span class="material-symbols-outlined">dashboard</span>
+                Vue d'ensemble
+            </a>
+            <a href="{% url 'manage_bookings' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
+                <span class="material-symbols-outlined">calendar_month</span>
+                Réservations
+            </a>
+            <a href="{% url 'manage_services' %}" class="flex items-center gap-md p-md rounded-xl bg-primary-container text-on-primary-fixed-variant font-label-md no-underline">
+                <span class="material-symbols-outlined">build</span>
+                Services
+            </a>
+            <hr class="my-md border-outline-variant/30">
+            <a href="{% url 'home' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Voir le site
+            </a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 py-xl">
+        <h1 class="text-headline-lg text-primary font-bold mb-lg">Gestion des services</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+            <!-- List -->
+            <div class="md:col-span-2 bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden">
+                <div class="p-md border-b border-outline-variant/10 text-label-sm text-on-surface-variant uppercase tracking-wider">
+                    {{ services.count }} service{{ services.count|pluralize }}
+                </div>
+                {% for service in services %}
+                <div class="flex items-center justify-between p-md border-b border-outline-variant/10 last:border-b-0">
+                    <div>
+                        <div class="font-bold text-primary">{{ service.name }}</div>
+                        <div class="text-sm text-on-surface-variant">{{ service.description|truncatechars:60 }} &middot; {{ service.duration_minutes }} min</div>
+                    </div>
+                    <div class="flex items-center gap-md">
+                        <div class="text-headline-md text-primary font-extrabold">{{ service.price }} <span class="text-sm text-on-surface-variant font-normal">DT</span></div>
+                        <form method="POST" action="{% url 'toggle_service' service.pk %}">
+                            {% csrf_token %}
+                            <button class="px-sm py-xs rounded-full text-xs font-bold border transition-all cursor-pointer {% if service.is_active %}bg-secondary/10 text-secondary border-secondary/30{% else %}bg-surface-container text-on-surface-variant border-outline-variant/30{% endif %}">
+                                {% if service.is_active %}Actif{% else %}Masqué{% endif %}
+                            </button>
+                        </form>
+                        <form method="POST" action="{% url 'delete_service' service.pk %}" onsubmit="return confirm('Supprimer {{ service.name }} ?')">
+                            {% csrf_token %}
+                            <button class="text-error hover:bg-error/10 p-xs rounded-lg transition-all material-symbols-outlined cursor-pointer border-0 bg-transparent">delete</button>
+                        </form>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="p-xl text-center text-on-surface-variant">Aucun service pour le moment.</div>
+                {% endfor %}
+            </div>
+
+            <!-- Add Form -->
+            <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-lg h-fit sticky top-20">
+                <h3 class="text-headline-md text-primary font-bold mb-md">+ Ajouter un service</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-md">
+                        <label class="text-label-md text-primary block mb-xs">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}<div class="mt-xs text-sm text-error">{{ field.errors }}</div>{% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="w-full bg-primary text-on-primary py-sm rounded-xl font-label-md hover:shadow-lg active:scale-95 transition-all">Ajouter</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

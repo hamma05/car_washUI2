@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HBIBWASH — Lavage auto premium{% endblock %}</title>
+    {% load static %}
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#001736",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#002b5b",
+                        "on-primary-container": "#7594ca",
+                        "primary-fixed": "#d6e3ff",
+                        "primary-fixed-dim": "#a9c7ff",
+                        secondary: "#006a63",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#47fbeb",
+                        "on-secondary-container": "#007169",
+                        "secondary-fixed": "#47fbeb",
+                        "secondary-fixed-dim": "#00decf",
+                        tertiary: "#705d00",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#ffe16d",
+                        background: "#f7f9fb",
+                        "on-background": "#191c1e",
+                        surface: "#f7f9fb",
+                        "surface-dim": "#d8dadc",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container": "#eceef0",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-surface": "#191c1e",
+                        "on-surface-variant": "#43474f",
+                        outline: "#747780",
+                        "outline-variant": "#c4c6d0",
+                        error: "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                    },
+                    fontFamily: {
+                        sans: ["Hanken Grotesk", "sans-serif"],
+                    },
+                    fontSize: {
+                        "headline-xl": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "800" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" }],
+                        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700" }],
+                    },
+                    spacing: {
+                        xs: "4px",
+                        sm: "12px",
+                        base: "16px",
+                        md: "24px",
+                        lg: "48px",
+                        xl: "80px",
+                        gutter: "44px",
+                        "container-max": "1280px",
+                    },
+                    borderRadius: {
+                        xl: "0.75rem",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-card { background: rgba(255,255,255,0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.3); }
+        .progress-gradient { background: linear-gradient(90deg, #001736 0%, #00decf 100%); }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-background text-on-surface font-sans selection:bg-secondary-container selection:text-on-secondary-container overflow-x-hidden">
+
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm shadow-primary/5">
+    <div class="flex justify-between items-center h-20 px-gutter max-w-container-max mx-auto">
+        <a href="{% url 'home' %}" class="flex items-center gap-2 no-underline">
+            <span class="material-symbols-outlined text-primary text-3xl">water_drop</span>
+            <span class="text-headline-md font-bold text-primary tracking-tight">HBIBWASH</span>
+        </a>
+        <div class="hidden md:flex items-center gap-lg">
+            <a href="{% url 'home' %}" class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md no-underline">Accueil</a>
+            <a href="{% url 'services' %}" class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md no-underline">Services</a>
+            <a href="{% url 'create_booking' %}" class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md no-underline">Réserver</a>
+            {% if user.is_staff %}
+                <a href="{% url 'dashboard' %}" class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md no-underline">Tableau de bord</a>
+                <a href="{% url 'logout' %}" class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors no-underline">Déconnexion</a>
+            {% elif user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors no-underline">Déconnexion</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors no-underline">Connexion</a>
+            {% endif %}
+        </div>
+        <a href="{% url 'create_booking' %}" class="bg-primary text-on-primary px-6 py-2.5 rounded-full text-label-md font-label-md shadow-lg shadow-primary/20 hover:bg-primary-container transition-all active:scale-95 no-underline">Réserver</a>
+    </div>
+</nav>
+
+{% if messages %}
+<div class="pt-20 px-gutter max-w-container-max mx-auto">
+    {% for message in messages %}
+    <div class="px-md py-sm rounded-xl mb-sm text-body-md font-medium
+        {% if message.tags == 'success' %}bg-secondary/10 text-secondary border-l-4 border-secondary{% elif message.tags == 'error' %}bg-error/10 text-error border-l-4 border-error{% else %}bg-primary/5 text-primary border-l-4 border-primary{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+<!-- Footer -->
+<footer class="w-full py-lg mt-xl bg-surface-container-lowest border-t border-outline-variant/20">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-md px-gutter max-w-container-max mx-auto">
+        <div class="space-y-md">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-2xl">water_drop</span>
+                <span class="text-headline-md font-bold text-primary tracking-tight">HBIBWASH</span>
+            </div>
+            <p class="text-body-md text-on-surface-variant">Votre voiture mérite le meilleur. Lavage auto premium à Tunis.</p>
+        </div>
+        <div>
+            <h4 class="text-label-md text-primary uppercase mb-md">Liens</h4>
+            <div class="flex flex-col gap-sm">
+                <a href="{% url 'home' %}" class="text-body-md text-on-surface-variant hover:text-primary transition-all no-underline">Accueil</a>
+                <a href="{% url 'services' %}" class="text-body-md text-on-surface-variant hover:text-primary transition-all no-underline">Services</a>
+                <a href="{% url 'create_booking' %}" class="text-body-md text-on-surface-variant hover:text-primary transition-all no-underline">Réserver</a>
+            </div>
+        </div>
+        <div>
+            <h4 class="text-label-md text-primary uppercase mb-md">Contact</h4>
+            <div class="flex flex-col gap-sm">
+                <span class="text-body-md text-on-surface-variant">+216 20 091 592</span>
+                <span class="text-body-md text-on-surface-variant">123 Avenue Habib Bourguiba, Tunis</span>
+            </div>
+        </div>
+        <div>
+            <h4 class="text-label-md text-primary uppercase mb-md">Horaires</h4>
+            <div class="flex flex-col gap-sm">
+                <span class="text-body-md text-on-surface-variant">Lun — Sam : 08:00 – 19:00</span>
+                <span class="text-body-md text-on-surface-variant">Dim : 09:00 – 13:00</span>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-container-max mx-auto px-gutter mt-lg pt-md border-t border-outline-variant/10 text-center">
+        <p class="text-body-md text-on-surface-variant opacity-60">© 2026 HBIBWASH. Tous droits réservés.</p>
+    </div>
+</footer>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>

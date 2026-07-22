@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Services & Prix — HBIBWASH{% endblock %}
+
+{% block extra_css %}
+<style>
+.glass-effect {
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+.bg-mesh-gradient {
+    background-color: #f7f9fb;
+    background-image: radial-gradient(at 0% 0%, rgba(169,199,255,0.15) 0px, transparent 50%),
+                      radial-gradient(at 100% 100%, rgba(71,251,235,0.1) 0px, transparent 50%);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="pt-20 pb-xl px-gutter max-w-container-max mx-auto">
+    <!-- Hero -->
+    <section class="text-center mb-xl">
+        <span class="inline-block bg-secondary-container text-on-secondary-container px-4 py-1.5 rounded-full text-label-sm mb-4">LAVAGE PREMIUM</span>
+        <h1 class="text-headline-xl text-primary mb-6 font-extrabold">Nos services</h1>
+        <p class="text-on-surface-variant max-w-2xl mx-auto text-body-lg">
+            Des formules adaptées à vos besoins, du lavage rapide au soin complet.
+        </p>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl items-end">
+        <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-md shadow-sm hover:shadow-lg transition-all duration-300">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h3 class="text-headline-md text-primary mb-1">Lavage rapide</h3>
+                    <p class="text-on-surface-variant text-label-md">15 min</p>
+                </div>
+                <span class="material-symbols-outlined text-secondary-container text-4xl" style="font-variation-settings:'FILL'1">speed</span>
+            </div>
+            <div class="mb-8">
+                <span class="text-headline-xl text-primary font-extrabold">10</span>
+                <span class="text-on-surface-variant text-body-md"> DT</span>
+            </div>
+            <ul class="space-y-4 mb-8">
+                <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL'1">check_circle</span>
+                    <span class="text-on-surface-variant">Rinçage haute pression</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL'1">check_circle</span>
+                    <span class="text-on-surface-variant">Séchage main</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL'1">check_circle</span>
+                    <span class="text-on-surface-variant">Nettoyage jantes</span>
+                </li>
+            </ul>
+            <a href="{% url 'create_booking' %}" class="w-full block text-center py-4 border border-primary text-primary rounded-xl font-label-md hover:bg-primary hover:text-on-primary transition-all no-underline">Sélectionner</a>
+        </div>
+
+        <div class="glass-effect border-2 border-tertiary relative rounded-xl p-md shadow-xl scale-105 z-10">
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-tertiary text-on-tertiary px-6 py-1 rounded-full text-label-sm uppercase tracking-widest shadow-md">Populaire</div>
+            <div class="flex justify-between items-start mb-6 pt-4">
+                <div>
+                    <h3 class="text-headline-md text-primary mb-1">Lavage externe</h3>
+                    <p class="text-on-surface-variant text-label-md">30 min</p>
+                </div>
+                <span class="material-symbols-outlined text-tertiary text-4xl" style="font-variation-settings:'FILL'1">auto_awesome</span>
+            </div>
+            <div class="mb-8">
+                <span class="text-headline-xl text-primary font-extrabold">15</span>
+                <span class="text-on-surface-variant text-body-md"> DT</span>
+            </div>
+            <ul class="space-y-4 mb-8">
+                <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL'1">check_circle</span>
+                    <span class="font-bold">Tout le lavage rapide</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL'1">check_circle</span>
+                    <span>Lavage soubassement</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL'1">check_circle</span>
+                    <span>Cire triple action</span>
+                </li>
+            </ul>
+            <a href="{% url 'create_booking' %}" class="w-full block text-center py-4 bg-primary text-on-primary rounded-xl font-label-md hover:shadow-lg active:scale-95 transition-all no-underline">Sélectionner</a>
+        </div>
+
+        <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-md shadow-sm hover:shadow-lg transition-all duration-300">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h3 class="text-headline-md text-primary mb-1">Lavage complet</h3>
+                    <p class="text-on-surface-variant text-label-md">45 min</p>
+                </div>
+                <span class="material-symbols-outlined text-secondary-container text-4xl" style="font-variation-settings:'FILL'1">diamond</span>
+            </div>
+            <div class="mb-8">
+                <span class="text-headline-xl text-primary font-extrabold">25</span>
+                <span class="text-on-surface-variant text-body-md"> DT</span>
+            </div>
+            <ul class="space-y-4 mb-8">
+                <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL'1">check_circle</span>
+                    <span class="font-bold">Tout le lavage externe</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL'1">check_circle</span>
+                    <span>Nettoyage intérieur complet</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL'1">check_circle</span>
+                    <span>Traitement cuir / tissu</span>
+                </li>
+            </ul>
+            <a href="{% url 'create_booking' %}" class="w-full block text-center py-4 border border-primary text-primary rounded-xl font-label-md hover:bg-primary hover:text-on-primary transition-all no-underline">Sélectionner</a>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="mt-xl">
+        <div class="text-center mb-lg">
+            <h2 class="text-headline-lg text-primary">Comparatif</h2>
+            <p class="text-on-surface-variant text-body-md">Ce qui est inclus dans chaque formule.</p>
+        </div>
+        <div class="overflow-x-auto rounded-xl border border-outline-variant/30 glass-effect">
+            <table class="w-full border-collapse text-left">
+                <thead>
+                    <tr class="bg-surface-container-low/50">
+                        <th class="p-md text-headline-md text-primary border-b border-outline-variant/30">Service</th>
+                        <th class="p-md text-label-md text-on-surface-variant border-b border-outline-variant/30 text-center">Rapide</th>
+                        <th class="p-md text-label-md text-primary border-b border-outline-variant/30 text-center bg-tertiary/5">Externe</th>
+                        <th class="p-md text-label-md text-on-surface-variant border-b border-outline-variant/30 text-center">Complet</th>
+                    </tr>
+                </thead>
+                <tbody class="text-body-md">
+                    <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="p-md border-b border-outline-variant/10">Lavage extérieur</td>
+                        <td class="p-md border-b border-outline-variant/10 text-center"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                        <td class="p-md border-b border-outline-variant/10 text-center bg-tertiary/5"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                        <td class="p-md border-b border-outline-variant/10 text-center"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                    </tr>
+                    <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="p-md border-b border-outline-variant/10">Séchage microfibre</td>
+                        <td class="p-md border-b border-outline-variant/10 text-center"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                        <td class="p-md border-b border-outline-variant/10 text-center bg-tertiary/5"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                        <td class="p-md border-b border-outline-variant/10 text-center"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                    </tr>
+                    <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="p-md border-b border-outline-variant/10">Nettoyage jantes</td>
+                        <td class="p-md border-b border-outline-variant/10 text-center text-outline-variant">—</td>
+                        <td class="p-md border-b border-outline-variant/10 text-center bg-tertiary/5"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                        <td class="p-md border-b border-outline-variant/10 text-center"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                    </tr>
+                    <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="p-md border-b border-outline-variant/10">Cire protectrice</td>
+                        <td class="p-md border-b border-outline-variant/10 text-center text-outline-variant">—</td>
+                        <td class="p-md border-b border-outline-variant/10 text-center bg-tertiary/5"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                        <td class="p-md border-b border-outline-variant/10 text-center"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                    </tr>
+                    <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="p-md border-b border-outline-variant/10">Soubassement</td>
+                        <td class="p-md border-b border-outline-variant/10 text-center text-outline-variant">—</td>
+                        <td class="p-md border-b border-outline-variant/10 text-center bg-tertiary/5 text-outline-variant">—</td>
+                        <td class="p-md border-b border-outline-variant/10 text-center"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                    </tr>
+                    <tr class="hover:bg-surface-container-low transition-colors">
+                        <td class="p-md">Intérieur complet</td>
+                        <td class="p-md text-center text-outline-variant">—</td>
+                        <td class="p-md text-center bg-tertiary/5 text-outline-variant">—</td>
+                        <td class="p-md text-center"><span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'1">check</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="mt-xl text-center">
+        <a href="{% url 'create_booking' %}" class="bg-primary text-on-primary px-lg py-4 rounded-xl font-headline-md inline-flex items-center gap-2 shadow-xl shadow-primary/30 transition-transform active:scale-95 no-underline">
+            Réserver maintenant
+            <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+    </div>
+</main>
+{% endblock %}

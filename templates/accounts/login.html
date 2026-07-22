@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Connexion — HBIBWASH{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center px-gutter pt-20 pb-xl">
+    <div class="w-full max-w-sm bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-xl overflow-hidden">
+        <div class="bg-primary text-on-primary p-xl text-center">
+            <span class="material-symbols-outlined text-5xl mb-sm">admin_panel_settings</span>
+            <h1 class="text-headline-lg font-extrabold mb-xs">HBIBWASH</h1>
+            <p class="text-on-primary/60 text-body-md">Accès administrateur</p>
+        </div>
+        <div class="p-lg">
+            <h2 class="text-headline-md text-primary font-bold mb-lg">Connexion</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-md">
+                    <label class="text-label-md text-primary block mb-xs">Nom d'utilisateur</label>
+                    <input type="text" name="username" class="w-full px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md" required>
+                </div>
+                <div class="mb-lg">
+                    <label class="text-label-md text-primary block mb-xs">Mot de passe</label>
+                    <input type="password" name="password" class="w-full px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md" required>
+                </div>
+                <button type="submit" class="w-full bg-primary text-on-primary py-sm rounded-xl font-label-md hover:shadow-lg active:scale-95 transition-all">Se connecter</button>
+            </form>
+            {% if form.errors %}
+            <div class="mt-md text-sm text-error bg-error/10 p-sm rounded-lg">Nom d'utilisateur ou mot de passe incorrect.</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

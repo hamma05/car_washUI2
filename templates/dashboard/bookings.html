@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block title %}Gestion des réservations — HBIBWASH{% endblock %}
+
+{% block content %}
+<div class="pt-20 min-h-screen flex flex-col md:flex-row max-w-container-max mx-auto px-gutter gap-lg">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 py-xl shrink-0">
+        <nav class="flex flex-col gap-sm">
+            <a href="{% url 'dashboard' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
+                <span class="material-symbols-outlined">dashboard</span>
+                Vue d'ensemble
+            </a>
+            <a href="{% url 'manage_bookings' %}" class="flex items-center gap-md p-md rounded-xl bg-primary-container text-on-primary-fixed-variant font-label-md no-underline">
+                <span class="material-symbols-outlined">calendar_month</span>
+                Réservations
+            </a>
+            <a href="{% url 'manage_services' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
+                <span class="material-symbols-outlined">build</span>
+                Services
+            </a>
+            <hr class="my-md border-outline-variant/30">
+            <a href="{% url 'home' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Voir le site
+            </a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 py-xl space-y-xl">
+        <div class="flex items-center justify-between">
+            <h1 class="text-headline-lg text-primary font-bold">Toutes les réservations</h1>
+        </div>
+
+        <!-- Filters -->
+        <form method="GET" class="flex gap-md items-center flex-wrap bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-md">
+            <label class="text-label-sm text-on-surface-variant">Filtrer :</label>
+            <select name="status" onchange="this.form.submit()" class="border border-outline-variant/30 rounded-lg px-sm py-xs text-sm cursor-pointer bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 outline-none">
+                <option value="">Tous les statuts</option>
+                <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>En attente</option>
+                <option value="in_progress" {% if status_filter == 'in_progress' %}selected{% endif %}>En cours</option>
+                <option value="done" {% if status_filter == 'done' %}selected{% endif %}>Terminée</option>
+                <option value="cancelled" {% if status_filter == 'cancelled' %}selected{% endif %}>Annulée</option>
+            </select>
+            <input type="date" name="date" value="{{ date_filter }}" onchange="this.form.submit()" class="border border-outline-variant/30 rounded-lg px-sm py-xs text-sm bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 outline-none">
+            {% if status_filter or date_filter %}
+            <a href="{% url 'manage_bookings' %}" class="text-sm text-error hover:underline no-underline">&times; Effacer</a>
+            {% endif %}
+            <span class="ml-auto text-sm text-on-surface-variant">{{ bookings.count }} résultat{{ bookings.count|pluralize }}</span>
+        </form>
+
+        <!-- Table -->
+        <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-surface-container-low">
+                            <th class="p-md text-label-sm text-on-surface-variant uppercase">#</th>
+                            <th class="p-md text-label-sm text-on-surface-variant uppercase">Client</th>
+                            <th class="p-md text-label-sm text-on-surface-variant uppercase">Service</th>
+                            <th class="p-md text-label-sm text-on-surface-variant uppercase">Date</th>
+                            <th class="p-md text-label-sm text-on-surface-variant uppercase">Heure</th>
+                            <th class="p-md text-label-sm text-on-surface-variant uppercase">Statut</th>
+                            <th class="p-md text-label-sm text-on-surface-variant uppercase">Paiement</th>
+                            <th class="p-md text-label-sm text-on-surface-variant uppercase">Confirmé</th>
+                            <th class="p-md text-label-sm text-on-surface-variant uppercase">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-outline-variant/10">
+                        {% for booking in bookings %}
+                        <tr class="hover:bg-surface-container-low/50 transition-colors">
+                            <td class="p-md text-sm text-on-surface-variant">#{{ booking.pk }}</td>
+                            <td class="p-md">
+                                <div class="font-bold text-primary">{{ booking.customer_name }}</div>
+                                <div class="text-sm text-on-surface-variant">{{ booking.customer_phone }}</div>
+                            </td>
+                            <td class="p-md">{{ booking.service.name }}</td>
+                            <td class="p-md">{{ booking.date }}</td>
+                            <td class="p-md">{{ booking.time|time:"H:i" }}</td>
+                            <td class="p-md">
+                                <form method="POST" action="{% url 'update_booking_status' booking.pk %}">
+                                    {% csrf_token %}
+                                    <select name="status" onchange="this.form.submit()" class="border border-outline-variant/30 rounded-lg px-sm py-xs text-sm cursor-pointer bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 outline-none">
+                                        <option value="pending" {% if booking.status == 'pending' %}selected{% endif %}>En attente</option>
+                                        <option value="in_progress" {% if booking.status == 'in_progress' %}selected{% endif %}>En cours</option>
+                                        <option value="done" {% if booking.status == 'done' %}selected{% endif %}>Terminée</option>
+                                        <option value="cancelled" {% if booking.status == 'cancelled' %}selected{% endif %}>Annulée</option>
+                                    </select>
+                                </form>
+                            </td>
+                            <td class="p-md">
+                                <form method="POST" action="{% url 'toggle_paid' booking.pk %}">
+                                    {% csrf_token %}
+                                    <button class="px-sm py-xs rounded-lg text-xs font-bold border transition-all cursor-pointer {% if booking.paid %}bg-secondary/10 text-secondary border-secondary/30{% else %}bg-tertiary/10 text-tertiary border-tertiary/30{% endif %}">
+                                        {% if booking.paid %}Payé{% else %}Non payé{% endif %}
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="p-md">
+                                <form method="POST" action="{% url 'toggle_confirmed' booking.pk %}">
+                                    {% csrf_token %}
+                                    <button class="px-sm py-xs rounded-lg text-xs font-bold border transition-all cursor-pointer {% if booking.confirmed %}bg-secondary/10 text-secondary border-secondary/30{% else %}bg-surface-container text-on-surface-variant border-outline-variant/30{% endif %}">
+                                        {% if booking.confirmed %}Confirmé{% else %}Non{% endif %}
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="p-md">
+                                <a href="{% url 'edit_booking' booking.pk %}" class="text-primary text-label-md font-bold hover:underline no-underline">Modifier</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="p-xl text-center text-on-surface-variant">Aucune réservation trouvée.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
