@@ -7,7 +7,17 @@ SECRET_KEY = 'django-insecure-change-this-in-production'
 
 DEBUG = True
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://car-washui2.onrender.com',
+]
+
 ALLOWED_HOSTS = ['*','car-washui2.onrender.com']
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
