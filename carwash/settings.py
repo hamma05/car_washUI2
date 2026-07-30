@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-change-this-in-production'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*','carwash-z66a.onrender.com']
+ALLOWED_HOSTS = ['*','car-washui2.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -16,11 +16,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Local apps
     'accounts',
     'bookings',
     'services',
     'dashboard',
+    'api',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

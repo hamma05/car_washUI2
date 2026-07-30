@@ -116,3 +116,8 @@ Nouvelle r&eacute;servation <span style="color:#1a6bff;">#{id}</span>
 def booking_confirm(request, pk):
     booking = get_object_or_404(Booking, pk=pk)
     return render(request, 'bookings/confirm.html', {'booking': booking})
+
+def maps(request):
+    return render(request, 'templates/home/index.html', {
+        'google_maps_api_key': settings.GOOGLE_MAPS_API_KEY
+    })

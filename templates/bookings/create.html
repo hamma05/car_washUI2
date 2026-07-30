@@ -82,41 +82,41 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
                 <div>
                     <label class="text-label-md text-primary block mb-md">Date</label>
-                    <input type="date" name="date" class="w-full px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md" required>
+                    <input aria-required="true" type="date" name="date" class="w-full px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md" required>
                 </div>
                 <div>
                     <label class="text-label-md text-primary block mb-md">Heure</label>
                     <div class="grid grid-cols-2 gap-sm">
                         <label class="cursor-pointer">
-                            <input type="radio" name="time" value="08:00" class="peer sr-only" checked>
+                            <input required type="radio" name="time" value="08:00" class="peer sr-only" checked>
                             <div class="py-sm px-md text-center rounded-xl border border-outline-variant/30 bg-surface-container-lowest peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-body-md">08:00</div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="time" value="09:00" class="peer sr-only">
+                            <input required type="radio" name="time" value="09:00" class="peer sr-only">
                             <div class="py-sm px-md text-center rounded-xl border border-outline-variant/30 bg-surface-container-lowest peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-body-md">09:00</div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="time" value="10:00" class="peer sr-only">
+                            <input required type="radio" name="time" value="10:00" class="peer sr-only">
                             <div class="py-sm px-md text-center rounded-xl border border-outline-variant/30 bg-surface-container-lowest peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-body-md">10:00</div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="time" value="11:00" class="peer sr-only">
+                            <input required type="radio" name="time" value="11:00" class="peer sr-only">
                             <div class="py-sm px-md text-center rounded-xl border border-outline-variant/30 bg-surface-container-lowest peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-body-md">11:00</div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="time" value="14:00" class="peer sr-only">
+                            <input required type="radio" name="time" value="14:00" class="peer sr-only">
                             <div class="py-sm px-md text-center rounded-xl border border-outline-variant/30 bg-surface-container-lowest peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-body-md">14:00</div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="time" value="15:00" class="peer sr-only">
+                            <input required type="radio" name="time" value="15:00" class="peer sr-only">
                             <div class="py-sm px-md text-center rounded-xl border border-outline-variant/30 bg-surface-container-lowest peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-body-md">15:00</div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="time" value="16:00" class="peer sr-only">
+                            <input required type="radio" name="time" value="16:00" class="peer sr-only">
                             <div class="py-sm px-md text-center rounded-xl border border-outline-variant/30 bg-surface-container-lowest peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-body-md">16:00</div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" name="time" value="17:00" class="peer sr-only">
+                            <input required type="radio" name="time" value="17:00" class="peer sr-only">
                             <div class="py-sm px-md text-center rounded-xl border border-outline-variant/30 bg-surface-container-lowest peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-body-md">17:00</div>
                         </label>
                     </div>
@@ -129,15 +129,15 @@
             <div class="space-y-lg max-w-lg mx-auto">
                 <div class="space-y-xs">
                     <label class="text-label-md text-primary">Nom complet</label>
-                    <input type="text" name="customer_name" class="w-full px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md" placeholder="Votre nom" required>
+                    <input required type="text" name="customer_name" class="w-full px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md" placeholder="Votre nom" required>
                 </div>
                 <div class="space-y-xs">
                     <label class="text-label-md text-primary">Téléphone</label>
-                    <input type="tel" name="customer_phone" class="w-full px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md" placeholder="Votre numéro" required>
+                    <input required type="tel" name="customer_phone" class="w-full px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md" placeholder="Votre numéro" required>
                 </div>
                 <div class="space-y-xs">
                     <label class="text-label-md text-primary">Notes (optionnel)</label>
-                    <textarea name="notes" rows="3" class="w-full px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md" placeholder="Demandes particulières..."></textarea>
+                    <textarea required name="notes" rows="3" class="w-full px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md" placeholder="Demandes particulières..."></textarea>
                 </div>
             </div>
         </div>

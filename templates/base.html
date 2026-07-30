@@ -83,6 +83,29 @@
     </style>
     {% block extra_css %}{% endblock %}
 </head>
+{%block extra_head %}
+<head>
+    
+    <script>
+    const CONFIGURATION = {
+        "locations": [
+        {"title":"HBIB lavage","address1":"trii9 bouragba","address2":"Mornaguia, Tunisia","coords":{"lat":36.7287616,"lng":10.0303723},"placeId":"ChIJY0UviR8v_RIRab654A242pQ"}
+        ],
+        "mapOptions": {"center":{"lat":38.0,"lng":-100.0},"fullscreenControl":true,"mapTypeControl":false,"streetViewControl":false,"zoom":4,"zoomControl":true,"maxZoom":17,"mapId":""},
+        "mapsApiKey": "YOUR_API_KEY_HERE",
+        "capabilities": {"input":true,"autocomplete":true,"directions":false,"distanceMatrix":true,"details":false,"actions":false}
+    };
+
+    </script>
+    <script type="module">
+    document.addEventListener('DOMContentLoaded', async () => {
+        await customElements.whenDefined('gmpx-store-locator');
+        const locator = document.querySelector('gmpx-store-locator');
+        locator.configureFromQuickBuilder(CONFIGURATION);});
+    </script>
+
+</head>
+{% endblock extra_head %}
 <body class="bg-background text-on-surface font-sans selection:bg-secondary-container selection:text-on-secondary-container overflow-x-hidden">
 
 <!-- Top Navigation -->
@@ -159,7 +182,25 @@
         <p class="text-body-md text-on-surface-variant opacity-60">© 2026 HBIBWASH. Tous droits réservés.</p>
     </div>
 </footer>
-
+<script>
+  const STORE_LOCATOR_CONFIGURATION = {
+    "locations": [
+        {"title":"HBIB lavage","address1":"trii9 bouragba","address2":"Mornaguia, Tunisia","coords":{"lat":36.7287616,"lng":10.0303723},"placeId":"ChIJY0UviR8v_RIRab654A242pQ"}
+    ],
+    "mapOptions": {"center":{"lat":36.7287616,"lng":10.0303723},"fullscreenControl":true,"mapTypeControl":false,"streetViewControl":false,"zoom":14,"zoomControl":true,"maxZoom":17,"mapId":""},
+    "mapsApiKey": "{{ google_maps_api_key }}",
+    "capabilities": {"input":true,"autocomplete":true,"directions":false,"distanceMatrix":true,"details":false,"actions":false}
+  };
+</script>
+<script type="module">
+  document.addEventListener('DOMContentLoaded', async () => {
+    await customElements.whenDefined('gmpx-store-locator');
+    const locator = document.querySelector('gmpx-store-locator');
+    locator.configureFromQuickBuilder(STORE_LOCATOR_CONFIGURATION);
+  });
+</script>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.15/index.min.js"></script>
+<gmpx-api-loader key="{{ google_maps_api_key }}" solution-channel="GMP_QB_locatorplus_v11_cABD"></gmpx-api-loader>
 {% block extra_js %}{% endblock %}
 </body>
 </html>

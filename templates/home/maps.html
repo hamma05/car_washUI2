@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Locator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+html,
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    gmpx-store-locator {
+        width: 100%;
+        height: 100%;
+        --gmpx-color-surface: #fff;
+        --gmpx-color-on-surface: #212121;
+        --gmpx-color-on-surface-variant: #757575;
+        --gmpx-color-primary: #1967d2;
+        --gmpx-color-outline: #e0e0e0;
+        --gmpx-fixed-panel-width-row-layout: 28.5em;
+        --gmpx-fixed-panel-height-column-layout: 65%;
+        --gmpx-font-family-base: "Roboto", sans-serif;
+        --gmpx-font-family-headings: "Roboto", sans-serif;
+        --gmpx-font-size-base: 0.875rem;
+        --gmpx-hours-color-open: #188038;
+        --gmpx-hours-color-closed: #d50000;
+        --gmpx-rating-color: #ffb300;
+        --gmpx-rating-color-empty: #e0e0e0;
+    }
+    </style>
+    <script>
+    const CONFIGURATION = {
+        "locations": [
+        {"title":"HBIB lavage","address1":"trii9 bouragba","address2":"Mornaguia, Tunisia","coords":{"lat":36.7287616,"lng":10.0303723},"placeId":"ChIJY0UviR8v_RIRab654A242pQ"}
+        ],
+        "mapOptions": {"center":{"lat":38.0,"lng":-100.0},"fullscreenControl":true,"mapTypeControl":false,"streetViewControl":false,"zoom":4,"zoomControl":true,"maxZoom":17,"mapId":""},
+        "mapsApiKey": "YOUR_API_KEY_HERE",
+        "capabilities": {"input":true,"autocomplete":true,"directions":false,"distanceMatrix":true,"details":false,"actions":false}
+    };
+
+    </script>
+    <script type="module">
+    document.addEventListener('DOMContentLoaded', async () => {
+        await customElements.whenDefined('gmpx-store-locator');
+        const locator = document.querySelector('gmpx-store-locator');
+        locator.configureFromQuickBuilder(CONFIGURATION);});
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
