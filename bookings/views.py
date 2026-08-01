@@ -1,3 +1,5 @@
+import json
+
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -5,6 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import BookingForm
 from .models import Booking
+from services.models import Service
 
 
 def create_booking(request):
@@ -17,7 +20,20 @@ def create_booking(request):
             return redirect('booking_confirm', pk=booking.pk)
     else:
         form = BookingForm()
-    return render(request, 'bookings/create.html', {'form': form})
+
+    services = [
+        {
+            'name': s.name,
+            'description': s.description,
+            'price': str(s.price),
+            'duration_minutes': s.duration_minutes,
+        }
+        for s in Service.objects.filter(is_active=True)
+    ]
+    return render(request, 'bookings/create.html', {
+        'form': form,
+        'services_json': json.dumps(services, ensure_ascii=False),
+    })
 
 
 def _send_notification(booking):

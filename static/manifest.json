@@ -1,0 +1,11 @@
+{
+  "assets/js/main.jsx": {
+    "file": "js/index-bundle.js",
+    "name": "index",
+    "src": "assets/js/main.jsx",
+    "isEntry": true,
+    "css": [
+      "assets/index.css"
+    ]
+  }
+}
