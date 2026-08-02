@@ -13,33 +13,100 @@ const TIME_SLOTS = ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00
 
 const SERVICE_ICONS = ['speed', 'auto_fix_high', 'diamond'];
 
+const FIELD_STEP = {
+  service: 1,
+  date: 2,
+  time: 2,
+  customer_name: 3,
+  customer_phone: 3,
+  notes: 3,
+};
+
+const NAME_RE = /^[^\W\d_]+(?: [^\W\d_]+)*$/u;
+const PHONE_RE = /^[0-9+\s-]+$/;
+
+function validateStep(step, values) {
+  const errors = {};
+  if (step === 1) {
+    if (!values.service) errors.service = ['Veuillez choisir un service.'];
+  }
+  if (step === 2) {
+    if (!values.date) errors.date = ['Veuillez choisir une date.'];
+    if (!values.time) errors.time = ['Veuillez choisir une heure.'];
+  }
+  if (step === 3) {
+    if (!values.customerName.trim()) {
+      errors.customer_name = ['Le nom est obligatoire.'];
+    } else if (!NAME_RE.test(values.customerName.trim())) {
+      errors.customer_name = ['Le nom ne doit contenir que des lettres (espaces autorisés entre les mots).'];
+    }
+    if (!values.customerPhone.trim()) {
+      errors.customer_phone = ['Le numéro de téléphone est obligatoire.'];
+    } else if (!PHONE_RE.test(values.customerPhone.trim())) {
+      errors.customer_phone = ['Le numéro de téléphone ne doit contenir que des chiffres.'];
+    }
+  }
+  return errors;
+}
+
 function formatPrice(price) {
   const n = Number(price);
   return Number.isInteger(n) ? `${n} DT` : `${n.toFixed(2)} DT`;
 }
 
-export default function BookingWizard({ services = [], csrfToken = '' }) {
-  const [step, setStep] = useState(1);
-  const [service, setService] = useState(services[0]?.name ?? '');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('08:00');
-  const [customerName, setCustomerName] = useState('');
-  const [customerPhone, setCustomerPhone] = useState('');
-  const [notes, setNotes] = useState('');
+function ErrorCard({ messages }) {
+  if (!messages || messages.length === 0) return null;
+  return (
+    <div className="mt-sm rounded-xl bg-error/10 border-l-4 border-error px-md py-sm text-body-md text-error">
+      {messages[0]}
+    </div>
+  );
+}
+
+export default function BookingWizard({ services = [], csrfToken = '', formErrors = {}, formData = {} }) {
+  const firstErrorStep = Object.keys(formErrors)
+    .map((k) => FIELD_STEP[k])
+    .find((s) => s !== undefined) ?? 1;
+
+  const [step, setStep] = useState(firstErrorStep);
+  const [service, setService] = useState(formData.service ?? services[0]?.name ?? '');
+  const [date, setDate] = useState(formData.date ?? '');
+  const [time, setTime] = useState(formData.time ?? '08:00');
+  const [customerName, setCustomerName] = useState(formData.customer_name ?? '');
+  const [customerPhone, setCustomerPhone] = useState(formData.customer_phone ?? '');
+  const [notes, setNotes] = useState(formData.notes ?? '');
+  const [clientErrors, setClientErrors] = useState({});
+  const [serverErrors, setServerErrors] = useState(formErrors);
 
   const meta = STEP_META[step];
   const isLastStep = step === TOTAL_STEPS;
 
-  const canNext = () => {
-    if (step === 1) return service !== '';
-    if (step === 2) return date !== '' && time !== '';
-    if (step === 3) return customerName.trim() !== '' && customerPhone.trim() !== '';
-    return true;
+  const clearError = (field) => {
+    setClientErrors((prev) => {
+      if (!(field in prev)) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+    setServerErrors((prev) => {
+      if (!(field in prev)) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
   };
+
+  const messagesFor = (field) => clientErrors[field] || serverErrors[field] || [];
 
   const handleNext = (e) => {
     if (step < TOTAL_STEPS) {
       e.preventDefault();
+      const errors = validateStep(step, { service, date, time, customerName, customerPhone });
+      if (Object.keys(errors).length > 0) {
+        setClientErrors(errors);
+        return;
+      }
+      setClientErrors({});
       setStep(step + 1);
     }
   };
@@ -70,11 +137,12 @@ export default function BookingWizard({ services = [], csrfToken = '' }) {
         </div>
       </div>
 
-      <form id="booking-form" method="POST" action="/bookings/new/" onSubmit={handleNext} className="relative overflow-hidden min-h-[450px]">
+      <form id="booking-form" method="POST" action="/bookings/new/" onSubmit={handleNext} noValidate className="relative overflow-hidden min-h-[450px]">
         {csrfToken && <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken} />}
 
-        {step === 1 && (
-          <div key="step-1" className={stepCls}>
+        <ErrorCard messages={messagesFor('__all__')} />
+
+        <div key="step-1" className={`${stepCls} ${step === 1 ? '' : 'hidden'}`}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-md">
               {services.map((s, i) => (
                 <label key={s.name} className="group relative cursor-pointer">
@@ -84,7 +152,10 @@ export default function BookingWizard({ services = [], csrfToken = '' }) {
                     value={s.name}
                     className="peer sr-only"
                     checked={service === s.name}
-                    onChange={() => setService(s.name)}
+                    onChange={() => {
+                      setService(s.name);
+                      clearError('service');
+                    }}
                   />
                   <div className="p-lg rounded-xl bg-surface-container-lowest border border-outline-variant/30 peer-checked:border-secondary peer-checked:ring-2 peer-checked:ring-secondary/20 shadow-sm transition-all hover:shadow-md h-full flex flex-col">
                     <div className="w-12 h-12 rounded-full bg-primary/5 flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
@@ -105,11 +176,10 @@ export default function BookingWizard({ services = [], csrfToken = '' }) {
                 <p className="text-body-md text-on-surface-variant">Aucun service disponible pour le moment.</p>
               )}
             </div>
+            <ErrorCard messages={messagesFor('service')} />
           </div>
-        )}
 
-        {step === 2 && (
-          <div key="step-2" className={stepCls}>
+        <div key="step-2" className={`${stepCls} ${step === 2 ? '' : 'hidden'}`}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-lg">
               <div>
                 <label className="text-label-md text-primary block mb-md" htmlFor="booking-date">
@@ -122,9 +192,13 @@ export default function BookingWizard({ services = [], csrfToken = '' }) {
                   name="date"
                   required
                   value={date}
-                  onChange={(e) => setDate(e.target.value)}
+                  onChange={(e) => {
+                    setDate(e.target.value);
+                    clearError('date');
+                  }}
                   className={inputCls}
                 />
+                <ErrorCard messages={messagesFor('date')} />
               </div>
               <div>
                 <label className="text-label-md text-primary block mb-md">Heure</label>
@@ -138,7 +212,10 @@ export default function BookingWizard({ services = [], csrfToken = '' }) {
                         value={slot}
                         className="peer sr-only"
                         checked={time === slot}
-                        onChange={() => setTime(slot)}
+                        onChange={() => {
+                          setTime(slot);
+                          clearError('time');
+                        }}
                       />
                       <div className="py-sm px-md text-center rounded-xl border border-outline-variant/30 bg-surface-container-lowest peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all text-body-md">
                         {slot}
@@ -146,13 +223,12 @@ export default function BookingWizard({ services = [], csrfToken = '' }) {
                     </label>
                   ))}
                 </div>
+                <ErrorCard messages={messagesFor('time')} />
               </div>
             </div>
           </div>
-        )}
 
-        {step === 3 && (
-          <div key="step-3" className={stepCls}>
+        <div key="step-3" className={`${stepCls} ${step === 3 ? '' : 'hidden'}`}>
             <div className="space-y-lg max-w-lg mx-auto">
               <div className="space-y-xs">
                 <label className="text-label-md text-primary" htmlFor="customer_name">
@@ -164,10 +240,15 @@ export default function BookingWizard({ services = [], csrfToken = '' }) {
                   type="text"
                   name="customer_name"
                   placeholder="Votre nom"
+                  maxLength={30}
                   value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
+                  onChange={(e) => {
+                    setCustomerName(e.target.value);
+                    clearError('customer_name');
+                  }}
                   className={inputCls}
                 />
+                <ErrorCard messages={messagesFor('customer_name')} />
               </div>
               <div className="space-y-xs">
                 <label className="text-label-md text-primary" htmlFor="customer_phone">
@@ -180,9 +261,13 @@ export default function BookingWizard({ services = [], csrfToken = '' }) {
                   name="customer_phone"
                   placeholder="Votre numéro"
                   value={customerPhone}
-                  onChange={(e) => setCustomerPhone(e.target.value)}
+                  onChange={(e) => {
+                    setCustomerPhone(e.target.value);
+                    clearError('customer_phone');
+                  }}
                   className={inputCls}
                 />
+                <ErrorCard messages={messagesFor('customer_phone')} />
               </div>
               <div className="space-y-xs">
                 <label className="text-label-md text-primary" htmlFor="notes">
@@ -194,16 +279,18 @@ export default function BookingWizard({ services = [], csrfToken = '' }) {
                   rows="3"
                   placeholder="Demandes particulières..."
                   value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
+                  onChange={(e) => {
+                    setNotes(e.target.value);
+                    clearError('notes');
+                  }}
                   className={inputCls}
                 />
+                <ErrorCard messages={messagesFor('notes')} />
               </div>
             </div>
           </div>
-        )}
 
-        {step === 4 && (
-          <div key="step-4" className={stepCls}>
+        <div key="step-4" className={`${stepCls} ${step === 4 ? '' : 'hidden'}`}>
             <div className="max-w-lg mx-auto">
               <div className="glass-card p-lg rounded-2xl border border-secondary/20 shadow-xl shadow-primary/5">
                 <h4 className="text-label-md text-secondary uppercase tracking-widest mb-md">Récapitulatif</h4>
@@ -232,7 +319,6 @@ export default function BookingWizard({ services = [], csrfToken = '' }) {
               </div>
             </div>
           </div>
-        )}
       </form>
 
       <div className="mt-lg flex justify-between items-center">
@@ -252,8 +338,7 @@ export default function BookingWizard({ services = [], csrfToken = '' }) {
         <button
           type="submit"
           form="booking-form"
-          disabled={!canNext()}
-          className="bg-primary text-on-primary px-lg py-sm rounded-full font-label-md hover:shadow-lg active:scale-95 transition-all flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100"
+          className="bg-primary text-on-primary px-lg py-sm rounded-full font-label-md hover:shadow-lg active:scale-95 transition-all flex items-center gap-xs"
         >
           {isLastStep ? 'Confirmer la réservation' : 'Continuer'}
           <span className="material-symbols-outlined">{isLastStep ? 'check_circle' : 'arrow_forward'}</span>

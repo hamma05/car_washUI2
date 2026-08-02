@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import Strands from './components/Strands.jsx';
 import BookingWizard from './components/BookingWizard.jsx';
 
-function BookingPage({ services, csrfToken }) {
+function BookingPage({ services, csrfToken, formErrors, formData }) {
   return (
     <>
       <Strands
@@ -23,7 +23,12 @@ function BookingPage({ services, csrfToken }) {
         scale={1.4}
       />
       <div className="relative z-10 max-w-3xl mx-auto px-gutter">
-        <BookingWizard services={services} csrfToken={csrfToken} />
+        <BookingWizard
+          services={services}
+          csrfToken={csrfToken}
+          formErrors={formErrors}
+          formData={formData}
+        />
       </div>
     </>
   );
@@ -32,12 +37,29 @@ function BookingPage({ services, csrfToken }) {
 const mount = document.getElementById('booking-app');
 if (mount) {
   let services = [];
+  let formErrors = {};
+  let formData = {};
   try {
     services = JSON.parse(mount.dataset.services || '[]');
   } catch {
     services = [];
   }
+  try {
+    formErrors = JSON.parse(mount.dataset.formErrors || '{}');
+  } catch {
+    formErrors = {};
+  }
+  try {
+    formData = JSON.parse(mount.dataset.formData || '{}');
+  } catch {
+    formData = {};
+  }
   createRoot(mount).render(
-    <BookingPage services={services} csrfToken={mount.dataset.csrf || ''} />
+    <BookingPage
+      services={services}
+      csrfToken={mount.dataset.csrf || ''}
+      formErrors={formErrors}
+      formData={formData}
+    />
   );
 }

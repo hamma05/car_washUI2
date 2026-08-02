@@ -30,10 +30,17 @@ def create_booking(request):
         }
         for s in Service.objects.filter(is_active=True)
     ]
-    return render(request, 'bookings/create.html', {
+    context = {
         'form': form,
         'services_json': json.dumps(services, ensure_ascii=False),
-    })
+    }
+    if form.errors:
+        context['form_errors_json'] = json.dumps(form.errors, ensure_ascii=False)
+        context['form_data_json'] = json.dumps(
+            {k: v for k, v in form.data.items() if k != 'csrfmiddlewaretoken'},
+            ensure_ascii=False,
+        )
+    return render(request, 'bookings/create.html', context)
 
 
 def _send_notification(booking):
