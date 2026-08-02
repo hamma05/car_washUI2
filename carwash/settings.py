@@ -131,6 +131,11 @@ STORAGES = {
 
 WHITENOISE_MAX_AGE = 60 * 60 * 24
 
+# Serve straight from STATICFILES_DIRS (committed static/) so production works
+# even if collectstatic is not run by the build step. On-the-fly compression
+# still applies. Set to False once the deploy pipeline collects static.
+WHITENOISE_USE_FINDERS = True
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/accounts/login/'
