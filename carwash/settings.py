@@ -1,23 +1,54 @@
 from pathlib import Path
 import os
 
+from django.core.exceptions import ImproperlyConfigured
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-change-this-in-production'
 
-DEBUG = True
+def env_bool(name, default=False):
+    return os.environ.get(name, 'true' if default else 'false').lower() in ('1', 'true', 'yes', 'on')
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://car-washui2.onrender.com',
-]
 
-ALLOWED_HOSTS = ['*','car-washui2.onrender.com']
+def env_list(name, default):
+    return [item.strip() for item in os.environ.get(name, default).split(',') if item.strip()]
 
+
+# SECURITY WARNING: keep the secret key secret in production!
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
+DEBUG = env_bool('DJANGO_DEBUG', default=False)
+
+if SECRET_KEY:
+    pass
+elif DEBUG:
+    SECRET_KEY = 'django-insecure-dev-only-key-do-not-use-in-production'
+else:
+    raise ImproperlyConfigured('DJANGO_SECRET_KEY must be set when DEBUG is disabled.')
+
+ALLOWED_HOSTS = env_list(
+    'DJANGO_ALLOWED_HOSTS',
+    'localhost,127.0.0.1,car-washui2.onrender.com,carwash-z66a.onrender.com',
+)
+
+CSRF_TRUSTED_ORIGINS = env_list(
+    'DJANGO_CSRF_TRUSTED_ORIGINS',
+    'https://car-washui2.onrender.com,https://carwash-z66a.onrender.com',
+)
+
+# Render terminates TLS; trust its forwarded proto header.
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+# HTTPS / security hardening (only enforced outside DEBUG).
+SECURE_SSL_REDIRECT = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
+SECURE_HSTS_PRELOAD = not DEBUG
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_REFERRER_POLICY = 'no-referrer-when-downgrade'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -35,7 +66,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -79,10 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://carwash-z66a.onrender.com',
-]
-
 LANGUAGE_CODE = 'fr-fr'
 TIME_ZONE = 'Africa/Tunis'
 USE_I18N = True
@@ -91,6 +118,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Serve static via WhiteNoise with brotli/gzip compression.
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
+    },
+}
+
+# Keep a modest cache since filenames are not content-hashed yet.
+WHITENOISE_MAX_AGE = 60 * 60 * 24
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
