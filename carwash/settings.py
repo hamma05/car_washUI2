@@ -129,7 +129,6 @@ STORAGES = {
     },
 }
 
-# Keep a modest cache since filenames are not content-hashed yet.
 WHITENOISE_MAX_AGE = 60 * 60 * 24
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
