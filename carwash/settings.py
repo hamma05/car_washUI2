@@ -17,7 +17,7 @@ def env_list(name, default):
 # SECURITY WARNING: keep the secret key secret in production!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
-DEBUG = env_bool('DJANGO_DEBUG', default=False)
+DEBUG = env_bool('DJANGO_DEBUG', default=True)
 
 if SECRET_KEY:
     pass
@@ -66,6 +66,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -138,7 +139,7 @@ WHITENOISE_USE_FINDERS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = '/accounts/connexion/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
