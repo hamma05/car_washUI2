@@ -5,6 +5,20 @@ from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load a local .env (development convenience only; git-ignored).
+# Real env vars always take precedence (setdefault), so platform env on Render
+# is never overridden by a committed .env.
+_env_path = BASE_DIR / ".env"
+if _env_path.exists():
+    with open(_env_path, "r", encoding="utf-8") as _fh:
+        for _line in _fh:
+            _line = _line.strip()
+            if not _line or _line.startswith("#") or "=" not in _line:
+                continue
+            _key, _, _val = _line.partition("=")
+            _key = _key.strip()
+            os.environ.setdefault(_key, _val.strip().strip('"').strip("'"))
+
 
 def env_bool(name, default=False):
     return os.environ.get(name, 'true' if default else 'false').lower() in ('1', 'true', 'yes', 'on')
@@ -17,7 +31,7 @@ def env_list(name, default):
 # SECURITY WARNING: keep the secret key secret in production!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
-DEBUG = env_bool('DJANGO_DEBUG', default=True)
+DEBUG = env_bool('DJANGO_DEBUG', default=False)
 
 if SECRET_KEY:
     pass
