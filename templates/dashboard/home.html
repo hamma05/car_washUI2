@@ -8,10 +8,10 @@
 {% endblock %}
 
 {% block content %}
-<div class="pt-20 min-h-screen flex flex-col md:flex-row max-w-container-max mx-auto px-gutter gap-lg">
+<div class="pt-24 md:pt-28 min-h-screen flex flex-col md:flex-row app-shell gap-md lg:gap-lg">
     <!-- Sidebar -->
-    <aside class="w-full md:w-64 py-xl shrink-0">
-        <nav class="flex flex-col gap-sm">
+    <aside class="w-full md:w-64 py-base md:py-xl shrink-0">
+        <nav class="flex md:flex-col gap-sm overflow-x-auto pb-xs md:pb-0">
             <a href="{% url 'dashboard' %}" class="flex items-center gap-md p-md rounded-xl bg-primary-container text-on-primary-fixed-variant font-label-md no-underline">
                 <span class="material-symbols-outlined">dashboard</span>
                 Vue d'ensemble
@@ -24,7 +24,7 @@
                 <span class="material-symbols-outlined">build</span>
                 Services
             </a>
-            <hr class="my-md border-outline-variant/30">
+            <hr class="hidden md:block my-md border-outline-variant/30">
             <a href="{% url 'home' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
                 <span class="material-symbols-outlined">arrow_back</span>
                 Voir le site
@@ -33,14 +33,14 @@
     </aside>
 
     <!-- Main -->
-    <main class="flex-1 py-xl space-y-xl">
+    <main class="flex-1 py-base md:py-xl space-y-lg md:space-y-xl min-w-0">
         <section class="space-y-sm">
             <h1 class="text-headline-lg text-primary font-bold">Bon retour !</h1>
             <p class="text-on-surface-variant text-body-md">Voici l'aperçu du jour.</p>
         </section>
 
         <!-- Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-base md:gap-md">
             <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-md">
                 <div class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Aujourd'hui</div>
                 <div class="text-headline-xl font-extrabold text-primary">{{ stats.today_count }}</div>
@@ -61,12 +61,12 @@
 
         <!-- Upcoming Bookings -->
         <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden">
-            <div class="flex justify-between items-center p-md border-b border-outline-variant/10">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-sm p-md border-b border-outline-variant/10">
                 <h3 class="text-headline-md text-primary font-bold">Réservations à venir</h3>
                 <a href="{% url 'manage_bookings' %}" class="text-secondary text-label-md font-bold hover:underline no-underline">Tout voir &rarr;</a>
             </div>
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full min-w-[860px] text-left border-collapse">
                     <thead>
                         <tr class="bg-surface-container-low">
                             <th class="p-md text-label-sm text-on-surface-variant uppercase">Client</th>
@@ -127,7 +127,7 @@
                 <h3 class="text-headline-md text-primary font-bold">Dernières réservations</h3>
             </div>
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full min-w-[620px] text-left border-collapse">
                     <thead>
                         <tr class="bg-surface-container-low">
                             <th class="p-md text-label-sm text-on-surface-variant uppercase">Service</th>

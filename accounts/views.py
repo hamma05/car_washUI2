@@ -12,6 +12,7 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            messages.success(request, f"Bienvenue, {user.get_username()}.")
             return redirect(request.GET.get('next', 'home'))
         else:
             messages.error(request, "Nom d'utilisateur ou mot de passe invalide.")
@@ -22,4 +23,5 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
+    messages.success(request, 'Vous êtes déconnecté.')
     return redirect('home')

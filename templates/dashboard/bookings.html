@@ -2,10 +2,10 @@
 {% block title %}Gestion des réservations — HBIBWASH{% endblock %}
 
 {% block content %}
-<div class="pt-20 min-h-screen flex flex-col md:flex-row max-w-container-max mx-auto px-gutter gap-lg">
+<div class="pt-24 md:pt-28 min-h-screen flex flex-col md:flex-row app-shell gap-md lg:gap-lg">
     <!-- Sidebar -->
-    <aside class="w-full md:w-64 py-xl shrink-0">
-        <nav class="flex flex-col gap-sm">
+    <aside class="w-full md:w-64 py-base md:py-xl shrink-0">
+        <nav class="flex md:flex-col gap-sm overflow-x-auto pb-xs md:pb-0">
             <a href="{% url 'dashboard' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
                 <span class="material-symbols-outlined">dashboard</span>
                 Vue d'ensemble
@@ -18,7 +18,7 @@
                 <span class="material-symbols-outlined">build</span>
                 Services
             </a>
-            <hr class="my-md border-outline-variant/30">
+            <hr class="hidden md:block my-md border-outline-variant/30">
             <a href="{% url 'home' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
                 <span class="material-symbols-outlined">arrow_back</span>
                 Voir le site
@@ -26,13 +26,13 @@
         </nav>
     </aside>
 
-    <main class="flex-1 py-xl space-y-xl">
-        <div class="flex items-center justify-between">
+    <main class="flex-1 py-base md:py-xl space-y-lg md:space-y-xl min-w-0">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-sm">
             <h1 class="text-headline-lg text-primary font-bold">Toutes les réservations</h1>
         </div>
 
         <!-- Filters -->
-        <form method="GET" class="flex gap-md items-center flex-wrap bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-md">
+        <form method="GET" class="flex gap-sm md:gap-md items-stretch sm:items-center flex-col sm:flex-row sm:flex-wrap bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-md">
             <label class="text-label-sm text-on-surface-variant">Filtrer :</label>
             <select name="status" onchange="this.form.submit()" class="border border-outline-variant/30 rounded-lg px-sm py-xs text-sm cursor-pointer bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 outline-none">
                 <option value="">Tous les statuts</option>
@@ -45,13 +45,13 @@
             {% if status_filter or date_filter %}
             <a href="{% url 'manage_bookings' %}" class="text-sm text-error hover:underline no-underline">&times; Effacer</a>
             {% endif %}
-            <span class="ml-auto text-sm text-on-surface-variant">{{ bookings.count }} résultat{{ bookings.count|pluralize }}</span>
+            <span class="sm:ml-auto text-sm text-on-surface-variant">{{ bookings.count }} résultat{{ bookings.count|pluralize }}</span>
         </form>
 
         <!-- Table -->
         <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full min-w-[980px] text-left border-collapse">
                     <thead>
                         <tr class="bg-surface-container-low">
                             <th class="p-md text-label-sm text-on-surface-variant uppercase">#</th>

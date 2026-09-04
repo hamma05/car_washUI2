@@ -2,9 +2,9 @@
 {% block title %}Modifier la réservation #{{ booking.pk }}{% endblock %}
 
 {% block content %}
-<div class="pt-20 min-h-screen flex flex-col md:flex-row max-w-container-max mx-auto px-gutter gap-lg">
-    <aside class="w-full md:w-64 py-xl shrink-0">
-        <nav class="flex flex-col gap-sm">
+<div class="pt-24 md:pt-28 min-h-screen flex flex-col md:flex-row app-shell gap-md lg:gap-lg">
+    <aside class="w-full md:w-64 py-base md:py-xl shrink-0">
+        <nav class="flex md:flex-col gap-sm overflow-x-auto pb-xs md:pb-0">
             <a href="{% url 'dashboard' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
                 <span class="material-symbols-outlined">dashboard</span>
                 Vue d'ensemble
@@ -17,7 +17,7 @@
                 <span class="material-symbols-outlined">build</span>
                 Services
             </a>
-            <hr class="my-md border-outline-variant/30">
+            <hr class="hidden md:block my-md border-outline-variant/30">
             <a href="{% url 'home' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
                 <span class="material-symbols-outlined">arrow_back</span>
                 Voir le site
@@ -25,8 +25,8 @@
         </nav>
     </aside>
 
-    <main class="flex-1 py-xl">
-        <div class="flex items-center justify-between mb-lg">
+    <main class="flex-1 py-base md:py-xl min-w-0">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-sm mb-lg">
             <h1 class="text-headline-lg text-primary font-bold">Modifier #{{ booking.pk }}</h1>
             <a href="{% url 'manage_bookings' %}" class="text-on-surface-variant hover:text-primary transition-all font-label-md no-underline flex items-center gap-xs">
                 <span class="material-symbols-outlined">arrow_back</span>
@@ -34,7 +34,7 @@
             </a>
         </div>
 
-        <div class="max-w-lg bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-lg">
+        <div class="max-w-lg bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-md sm:p-lg">
             <form method="POST">
                 {% csrf_token %}
                 {% for field in form %}
@@ -46,9 +46,9 @@
                     {% endif %}
                 </div>
                 {% endfor %}
-                <div class="flex gap-md pt-md border-t border-outline-variant/10">
-                    <button type="submit" class="bg-primary text-on-primary px-lg py-sm rounded-xl font-label-md hover:shadow-lg active:scale-95 transition-all">Enregistrer</button>
-                    <a href="{% url 'manage_bookings' %}" class="border border-outline-variant text-on-surface px-lg py-sm rounded-xl font-label-md hover:bg-surface-container transition-all no-underline">Annuler</a>
+                <div class="flex flex-col sm:flex-row gap-sm sm:gap-md pt-md border-t border-outline-variant/10">
+                    <button type="submit" class="w-full sm:w-auto bg-primary text-on-primary px-lg py-sm rounded-xl font-label-md hover:shadow-lg active:scale-95 transition-all">Enregistrer</button>
+                    <a href="{% url 'manage_bookings' %}" class="w-full sm:w-auto text-center border border-outline-variant text-on-surface px-lg py-sm rounded-xl font-label-md hover:bg-surface-container transition-all no-underline">Annuler</a>
                 </div>
             </form>
         </div>

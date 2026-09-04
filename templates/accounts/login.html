@@ -2,14 +2,14 @@
 {% block title %}Connexion — HBIBWASH{% endblock %}
 
 {% block content %}
-<div class="min-h-screen flex items-center justify-center px-gutter pt-20 pb-xl">
-    <div class="w-full max-w-sm bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-xl overflow-hidden">
-        <div class="bg-primary text-on-primary p-xl text-center">
+<div class="min-h-screen flex items-center justify-center app-shell pt-24 md:pt-28 pb-lg md:pb-xl">
+    <div class="w-full max-w-sm bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-xl overflow-hidden">
+        <div class="bg-primary text-on-primary p-lg md:p-xl text-center">
             <span class="material-symbols-outlined text-5xl mb-sm">admin_panel_settings</span>
             <h1 class="text-headline-lg font-extrabold mb-xs">HBIBWASH</h1>
             <p class="text-on-primary/60 text-body-md">Accès administrateur</p>
         </div>
-        <div class="p-lg">
+        <div class="p-md sm:p-lg">
             <h2 class="text-headline-md text-primary font-bold mb-lg">Connexion</h2>
             <form method="POST">
                 {% csrf_token %}

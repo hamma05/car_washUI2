@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-<main class="flex-grow pt-20 pb-xl w-full relative">
+<main class="flex-grow pt-24 md:pt-28 pb-lg md:pb-xl w-full relative">
     <div id="booking-app" data-services="{{ services_json|escape }}" data-csrf="{{ csrf_token }}" data-form-errors="{{ form_errors_json|escape }}" data-form-data="{{ form_data_json|escape }}" class="relative min-h-[85vh]">
         <div class="py-lg text-center text-body-md text-on-surface-variant">
             Chargement du formulaire de réservation...

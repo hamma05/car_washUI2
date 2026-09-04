@@ -36,18 +36,18 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="relative min-h-[500px] md:min-h-[600px] flex items-center overflow-hidden pt-20">
+<section class="relative min-h-[520px] md:min-h-[620px] flex items-center overflow-hidden pt-16 md:pt-20 pb-lg">
     <div class="absolute inset-0 z-0">
         <div class="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent z-10"></div>
         <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=1200&q=80')"></div>
     </div>
-    <div class="max-w-container-max mx-auto px-gutter relative z-20 w-full">
-        <div class="max-w-xl space-y-md">
+    <div class="app-shell relative z-20 w-full">
+        <div class="max-w-xl space-y-md mt-[5px]">
             <div class="inline-flex items-center gap-2 bg-secondary-container/30 text-on-secondary-container px-4 py-1.5 rounded-full border border-secondary-container">
                 <span class="material-symbols-outlined text-sm">auto_awesome</span>
                 <span class="text-label-sm">LAVAGE AUTO PREMIUM</span>
             </div>
-            <h1 class="text-headline-xl-mobile md:text-headline-xl text-primary leading-tight font-extrabold">
+            <h1 class="text-[2.25rem] leading-[2.65rem] md:text-headline-xl text-primary font-extrabold" style="margin-top: 29px;">
                 Un lavage précis<br/>pour <span class="text-gradient">votre véhicule.</span>
             </h1>
             <p class="text-body-lg text-on-surface-variant max-w-lg">
@@ -67,22 +67,22 @@
 </section>
 
 <!-- Process Section -->
-<section class="py-xl bg-surface-container-low">
-    <div class="max-w-container-max mx-auto px-gutter">
+<section class="py-lg md:py-xl bg-surface-container-low">
+    <div class="app-shell">
         <div class="text-center mb-lg">
             <h2 class="text-headline-lg text-primary mb-base">Notre processus</h2>
             <p class="text-body-md text-on-surface-variant max-w-2xl mx-auto">Chaque lavage est une opération orchestrée avec précision pour un résultat parfait.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-base md:grid-rows-2 md:h-[500px]">
-            <div class="md:col-span-2 md:row-span-2 glass-card rounded-2xl overflow-hidden">
-                <div class="h-1/2 w-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=600&q=80')"></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-base lg:grid-rows-2 lg:min-h-[500px]">
+            <div class="sm:col-span-2 lg:row-span-2 glass-card rounded-xl overflow-hidden">
+                <div class="h-56 lg:h-1/2 w-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=600&q=80')"></div>
                 <div class="p-md space-y-xs">
                     <div class="text-secondary font-bold text-xs uppercase tracking-tighter">Phase 01</div>
                     <h3 class="text-headline-md text-primary">Pré-lavage sans contact</h3>
                     <p class="text-body-md text-on-surface-variant">Nos émulsifiants à pH équilibré éliminent les contaminants sans toucher votre carrosserie.</p>
                 </div>
             </div>
-            <div class="md:col-span-2 bg-primary-container text-on-primary-container p-md rounded-2xl flex flex-col justify-between">
+            <div class="sm:col-span-2 bg-primary-container text-on-primary-container p-md rounded-xl flex flex-col justify-between min-h-56">
                 <div class="flex justify-between items-start">
                     <span class="material-symbols-outlined text-4xl">opacity</span>
                 </div>
@@ -92,14 +92,14 @@
                     <p class="text-body-md opacity-80 mt-xs">Des jets oscillants haute pression ciblent les passages de roues et le soubassement.</p>
                 </div>
             </div>
-            <div class="md:col-span-1 bg-surface-container-highest p-md rounded-2xl flex flex-col justify-between service-card-hover transition-all">
+            <div class="bg-surface-container-highest p-md rounded-xl flex flex-col justify-between service-card-hover transition-all min-h-44">
                 <span class="material-symbols-outlined text-secondary text-3xl">air</span>
                 <div>
                     <div class="text-secondary font-bold text-xs uppercase tracking-tighter">Phase 03</div>
                     <h4 class="text-label-md text-primary mt-xs">Séchage intégral</h4>
                 </div>
             </div>
-            <div class="md:col-span-1 bg-secondary text-on-secondary p-md rounded-2xl flex flex-col justify-between service-card-hover transition-all">
+            <div class="bg-secondary text-on-secondary p-md rounded-xl flex flex-col justify-between service-card-hover transition-all min-h-44">
                 <span class="material-symbols-outlined text-3xl">verified</span>
                 <div>
                     <div class="font-bold text-xs uppercase tracking-tighter opacity-70">Phase 04</div>
@@ -111,14 +111,14 @@
 </section>
 
 <!-- Services Tiers -->
-<section class="py-xl bg-surface">
-    <div class="max-w-container-max mx-auto px-gutter">
+<section class="py-lg md:py-xl bg-surface">
+    <div class="app-shell">
         <div class="text-center mb-lg">
             <h2 class="text-headline-lg text-primary mb-base">Nos forfaits</h2>
             <p class="text-body-md text-on-surface-variant max-w-2xl mx-auto">Du lavage rapide au soin complet, choisissez la formule qui vous convient.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
-            <div class="bg-white border border-outline-variant/50 p-lg rounded-2xl space-y-md service-card-hover transition-all flex flex-col">
+            <div class="bg-white border border-outline-variant/50 p-md lg:p-lg rounded-xl space-y-md service-card-hover transition-all flex flex-col">
                 <div class="space-y-xs">
                     <h3 class="text-headline-md text-primary">Lavage rapide</h3>
                     <p class="text-body-md text-on-surface-variant">Lavage extérieur rapide pour un entretien régulier.</p>
@@ -132,7 +132,7 @@
                 <div class="text-label-sm text-secondary font-bold">15 min</div>
                 <a href="{% url 'create_booking' %}" class="w-full block text-center py-base border border-primary text-primary rounded-xl font-label-md hover:bg-primary hover:text-on-primary transition-all no-underline">Choisir</a>
             </div>
-            <div class="relative bg-white border-2 border-secondary p-lg rounded-2xl space-y-md service-card-hover transition-all flex flex-col shadow-2xl shadow-secondary/10">
+            <div class="relative bg-white border-2 border-secondary p-md lg:p-lg rounded-xl space-y-md service-card-hover transition-all flex flex-col shadow-2xl shadow-secondary/10">
                 <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-secondary text-on-secondary px-4 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest">Populaire</div>
                 <div class="space-y-xs">
                     <h3 class="text-headline-md text-primary">Lavage externe</h3>
@@ -147,7 +147,7 @@
                 <div class="text-label-sm text-secondary font-bold">30 min</div>
                 <a href="{% url 'create_booking' %}" class="w-full block text-center py-base bg-secondary text-on-secondary rounded-xl font-label-md shadow-lg shadow-secondary/20 active:scale-95 transition-all no-underline">Choisir</a>
             </div>
-            <div class="bg-white border border-outline-variant/50 p-lg rounded-2xl space-y-md service-card-hover transition-all flex flex-col">
+            <div class="bg-white border border-outline-variant/50 p-md lg:p-lg rounded-xl space-y-md service-card-hover transition-all flex flex-col">
                 <div class="space-y-xs">
                     <h3 class="text-headline-md text-primary">Lavage complet</h3>
                     <p class="text-body-md text-on-surface-variant">Nettoyage intégral intérieur et extérieur.</p>
@@ -166,13 +166,13 @@
 </section>
 
 <!-- Location Section -->
-<section class="py-xl overflow-hidden bg-surface-container">
-    <div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 lg:grid-cols-12 gap-lg items-center">
+<section class="py-lg md:py-xl overflow-hidden bg-surface-container">
+    <div class="app-shell grid grid-cols-1 lg:grid-cols-12 gap-lg items-center">
         <div class="lg:col-span-5 space-y-md">
             <h2 class="text-headline-lg text-primary">Nous trouver</h2>
             <p class="text-body-md text-on-surface-variant">Notre centre de lavage est situé au cœur de Tunis. Venez nous rendre visite.</p>
             <div class="space-y-base">
-                <div class="flex items-center gap-base p-md bg-white rounded-xl border-l-4 border-secondary shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-base p-md bg-white rounded-xl border-l-4 border-secondary shadow-sm">
                     <span class="material-symbols-outlined text-primary">location_on</span>
                     <div class="flex-1">
                         <div class="text-label-md text-primary">Centre HBIBWASH</div>
@@ -182,7 +182,7 @@
                 </div>
             </div>
         </div>
-        <div class="lg:col-span-7 h-[400px] rounded-3xl overflow-hidden shadow-2xl bg-surface-container-highest flex items-center justify-center">
+        <div class="lg:col-span-7 h-[280px] sm:h-[360px] lg:h-[420px] rounded-xl overflow-hidden shadow-2xl bg-surface-container-highest flex items-center justify-center">
             <div class="text-center text-on-surface-variant">
                 <span class="material-symbols-outlined text-6xl">map</span>
                 <p class="text-body-md mt-md">Avenue Habib Bourguiba, Mornaguia</p>
@@ -192,12 +192,9 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-xl px-gutter">
-    <div class="max-w-container-max mx-auto bg-primary rounded-3xl p-lg md:p-xl relative overflow-hidden text-center text-on-primary">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-secondary-fixed rounded-full blur-[120px]"></div>
-            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary-fixed-dim rounded-full blur-[120px]"></div>
-        </div>
+<section class="py-lg md:py-xl">
+    <div class="app-shell">
+    <div class="bg-primary rounded-xl p-lg md:p-xl relative overflow-hidden text-center text-on-primary">
         <div class="relative z-10 space-y-md">
             <h2 class="text-headline-xl-mobile md:text-headline-xl text-white font-extrabold">Prêt pour un lavage ?</h2>
             <p class="text-body-lg text-white/80 max-w-xl mx-auto">Réservez votre créance en ligne et passez avec votre véhicule. Simple, rapide et sans attente.</p>
@@ -205,6 +202,7 @@
                 <a href="{% url 'create_booking' %}" class="bg-secondary text-on-secondary px-lg py-4 rounded-xl font-headline-md shadow-xl shadow-secondary/30 transition-transform active:scale-95 no-underline">Réserver maintenant</a>
             </div>
         </div>
+    </div>
     </div>
 </section>
 {% endblock %}

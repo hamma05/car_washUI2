@@ -2,20 +2,20 @@
 {% block title %}Réservation confirmée — HBIBWASH{% endblock %}
 
 {% block content %}
-<div class="min-h-screen flex items-center justify-center px-gutter pt-32 pb-xl">
-    <div class="max-w-lg w-full bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-xl overflow-hidden">
-        <div class="bg-primary text-on-primary p-xl text-center">
+<div class="min-h-screen flex items-center justify-center app-shell pt-24 md:pt-32 pb-lg md:pb-xl">
+    <div class="max-w-lg w-full bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-xl overflow-hidden">
+        <div class="bg-primary text-on-primary p-lg md:p-xl text-center">
             <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-3xl mx-auto mb-md animate-bounce" style="animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1)">
                 <span class="material-symbols-outlined text-on-secondary">check</span>
             </div>
             <h1 class="text-headline-lg font-extrabold mb-xs">RÉSERVATION CONFIRMÉE !</h1>
             <p class="text-on-primary/60 text-body-md">À bientôt au centre. Tout sera prêt pour votre arrivée.</p>
         </div>
-        <div class="p-lg">
+        <div class="p-md sm:p-lg">
             <p class="text-center text-body-md text-on-surface-variant mb-lg">
                 Numéro de réservation : <strong class="text-primary">#{{ booking.pk }}</strong>
             </p>
-            <div class="grid grid-cols-2 gap-md mb-lg">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-base md:gap-md mb-lg">
                 <div class="bg-surface-container-low rounded-xl p-md">
                     <div class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Client</div>
                     <div class="text-body-md font-bold text-primary">{{ booking.customer_name }}</div>
@@ -43,7 +43,7 @@
                 <div class="text-body-md text-primary">{{ booking.notes }}</div>
             </div>
             {% endif %}
-            <div class="flex gap-md pt-md border-t border-outline-variant/10">
+            <div class="flex flex-col sm:flex-row gap-sm sm:gap-md pt-md border-t border-outline-variant/10">
                 <a href="{% url 'create_booking' %}" class="flex-1 text-center bg-primary text-on-primary py-sm rounded-xl font-label-md hover:shadow-lg active:scale-95 transition-all no-underline">Nouvelle réservation</a>
                 <a href="{% url 'home' %}" class="flex-1 text-center border border-outline-variant text-on-surface py-sm rounded-xl font-label-md hover:bg-surface-container transition-all no-underline">Accueil</a>
             </div>

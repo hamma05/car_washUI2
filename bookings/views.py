@@ -18,6 +18,7 @@ def create_booking(request):
             _send_notification(booking)
             messages.success(request, 'R\u00e9servation confirm\u00e9e ! \u00c0 bient\u00f4t.')
             return redirect('booking_confirm', pk=booking.pk)
+        messages.error(request, 'Veuillez corriger les champs indiqu\u00e9s dans le formulaire.')
     else:
         form = BookingForm()
 

@@ -22,7 +22,7 @@ function BookingPage({ services, csrfToken, formErrors, formData }) {
         opacity={0.35}
         scale={1.4}
       />
-      <div className="relative z-10 max-w-3xl mx-auto px-gutter">
+      <div className="app-shell relative z-10 max-w-5xl">
         <BookingWizard
           services={services}
           csrfToken={csrfToken}

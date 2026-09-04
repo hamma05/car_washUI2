@@ -2,9 +2,9 @@
 {% block title %}Gestion des services — HBIBWASH{% endblock %}
 
 {% block content %}
-<div class="pt-20 min-h-screen flex flex-col md:flex-row max-w-container-max mx-auto px-gutter gap-lg">
-    <aside class="w-full md:w-64 py-xl shrink-0">
-        <nav class="flex flex-col gap-sm">
+<div class="pt-24 md:pt-28 min-h-screen flex flex-col md:flex-row app-shell gap-md lg:gap-lg">
+    <aside class="w-full md:w-64 py-base md:py-xl shrink-0">
+        <nav class="flex md:flex-col gap-sm overflow-x-auto pb-xs md:pb-0">
             <a href="{% url 'dashboard' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
                 <span class="material-symbols-outlined">dashboard</span>
                 Vue d'ensemble
@@ -17,7 +17,7 @@
                 <span class="material-symbols-outlined">build</span>
                 Services
             </a>
-            <hr class="my-md border-outline-variant/30">
+            <hr class="hidden md:block my-md border-outline-variant/30">
             <a href="{% url 'home' %}" class="flex items-center gap-md p-md rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-all font-label-md no-underline">
                 <span class="material-symbols-outlined">arrow_back</span>
                 Voir le site
@@ -25,22 +25,22 @@
         </nav>
     </aside>
 
-    <main class="flex-1 py-xl">
+    <main class="flex-1 py-base md:py-xl min-w-0">
         <h1 class="text-headline-lg text-primary font-bold mb-lg">Gestion des services</h1>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-md lg:gap-lg">
             <!-- List -->
-            <div class="md:col-span-2 bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden">
+            <div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden">
                 <div class="p-md border-b border-outline-variant/10 text-label-sm text-on-surface-variant uppercase tracking-wider">
                     {{ services.count }} service{{ services.count|pluralize }}
                 </div>
                 {% for service in services %}
-                <div class="flex items-center justify-between p-md border-b border-outline-variant/10 last:border-b-0">
-                    <div>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-md p-md border-b border-outline-variant/10 last:border-b-0">
+                    <div class="min-w-0">
                         <div class="font-bold text-primary">{{ service.name }}</div>
                         <div class="text-sm text-on-surface-variant">{{ service.description|truncatechars:60 }} &middot; {{ service.duration_minutes }} min</div>
                     </div>
-                    <div class="flex items-center gap-md">
+                    <div class="flex flex-wrap items-center gap-sm md:gap-md">
                         <div class="text-headline-md text-primary font-extrabold">{{ service.price }} <span class="text-sm text-on-surface-variant font-normal">DT</span></div>
                         <form method="POST" action="{% url 'toggle_service' service.pk %}">
                             {% csrf_token %}
@@ -60,7 +60,7 @@
             </div>
 
             <!-- Add Form -->
-            <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-lg h-fit sticky top-20">
+            <div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-md lg:p-lg h-fit lg:sticky lg:top-24">
                 <h3 class="text-headline-md text-primary font-bold mb-md">+ Ajouter un service</h3>
                 <form method="POST">
                     {% csrf_token %}

@@ -113,19 +113,19 @@ export default function BookingWizard({ services = [], csrfToken = '', formError
 
   const stepCls = 'step-transition';
   const inputCls =
-    'w-full px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md';
+    'w-full px-base sm:px-md py-sm rounded-xl border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-secondary/30 focus:border-secondary outline-none transition-all text-body-md';
 
   return (
     <>
-      <div className="mb-lg">
-        <div className="flex justify-between items-end mb-sm">
+      <div className="mb-md md:mb-lg">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-sm mb-sm">
           <div>
             <span className="text-label-sm uppercase tracking-widest text-primary/60">
               Étape {step} sur {TOTAL_STEPS}
             </span>
-            <h1 className="text-headline-lg text-primary font-bold">{meta.title}</h1>
+            <h1 className="text-[1.75rem] leading-9 md:text-headline-lg text-primary font-bold">{meta.title}</h1>
           </div>
-          <div className="text-right hidden sm:block">
+          <div className="sm:text-right">
             <span className="text-body-md text-on-surface-variant">{meta.desc}</span>
           </div>
         </div>
@@ -137,13 +137,13 @@ export default function BookingWizard({ services = [], csrfToken = '', formError
         </div>
       </div>
 
-      <form id="booking-form" method="POST" action="/bookings/new/" onSubmit={handleNext} noValidate className="relative overflow-hidden min-h-[450px]">
+      <form id="booking-form" method="POST" action="/bookings/new/" onSubmit={handleNext} noValidate className="relative overflow-hidden min-h-[520px] md:min-h-[450px]">
         {csrfToken && <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken} />}
 
         <ErrorCard messages={messagesFor('__all__')} />
 
         <div key="step-1" className={`${stepCls} ${step === 1 ? '' : 'hidden'}`}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-md">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-base md:gap-md">
               {services.map((s, i) => (
                 <label key={s.name} className="group relative cursor-pointer">
                   <input
@@ -157,7 +157,7 @@ export default function BookingWizard({ services = [], csrfToken = '', formError
                       clearError('service');
                     }}
                   />
-                  <div className="p-lg rounded-xl bg-surface-container-lowest border border-outline-variant/30 peer-checked:border-secondary peer-checked:ring-2 peer-checked:ring-secondary/20 shadow-sm transition-all hover:shadow-md h-full flex flex-col">
+                  <div className="p-md lg:p-lg rounded-xl bg-surface-container-lowest border border-outline-variant/30 peer-checked:border-secondary peer-checked:ring-2 peer-checked:ring-secondary/20 shadow-sm transition-all hover:shadow-md h-full flex flex-col">
                     <div className="w-12 h-12 rounded-full bg-primary/5 flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
                       <span className="material-symbols-outlined text-primary text-3xl">
                         {SERVICE_ICONS[i] || 'local_car_wash'}
@@ -165,7 +165,7 @@ export default function BookingWizard({ services = [], csrfToken = '', formError
                     </div>
                     <h3 className="text-headline-md mb-xs">{s.name}</h3>
                     <p className="text-body-md text-on-surface-variant mb-md flex-grow">{s.description}</p>
-                    <div className="flex justify-between items-center mt-auto">
+                    <div className="flex flex-wrap gap-sm justify-between items-center mt-auto">
                       <span className="text-headline-md font-bold text-primary">{formatPrice(s.price)}</span>
                       <span className="text-label-sm text-secondary font-bold uppercase">{s.duration_minutes} min</span>
                     </div>
@@ -180,7 +180,7 @@ export default function BookingWizard({ services = [], csrfToken = '', formError
           </div>
 
         <div key="step-2" className={`${stepCls} ${step === 2 ? '' : 'hidden'}`}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-md lg:gap-lg">
               <div>
                 <label className="text-label-md text-primary block mb-md" htmlFor="booking-date">
                   Date
@@ -202,7 +202,7 @@ export default function BookingWizard({ services = [], csrfToken = '', formError
               </div>
               <div>
                 <label className="text-label-md text-primary block mb-md">Heure</label>
-                <div className="grid grid-cols-2 gap-sm">
+                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-2 gap-sm">
                   {TIME_SLOTS.map((slot) => (
                     <label key={slot} className="cursor-pointer">
                       <input
@@ -229,7 +229,7 @@ export default function BookingWizard({ services = [], csrfToken = '', formError
           </div>
 
         <div key="step-3" className={`${stepCls} ${step === 3 ? '' : 'hidden'}`}>
-            <div className="space-y-lg max-w-lg mx-auto">
+            <div className="space-y-md md:space-y-lg max-w-lg mx-auto">
               <div className="space-y-xs">
                 <label className="text-label-md text-primary" htmlFor="customer_name">
                   Nom complet
@@ -292,26 +292,26 @@ export default function BookingWizard({ services = [], csrfToken = '', formError
 
         <div key="step-4" className={`${stepCls} ${step === 4 ? '' : 'hidden'}`}>
             <div className="max-w-lg mx-auto">
-              <div className="glass-card p-lg rounded-2xl border border-secondary/20 shadow-xl shadow-primary/5">
+              <div className="glass-card p-md sm:p-lg rounded-xl border border-secondary/20 shadow-xl shadow-primary/5">
                 <h4 className="text-label-md text-secondary uppercase tracking-widest mb-md">Récapitulatif</h4>
                 <div className="space-y-sm">
-                  <div className="flex justify-between py-xs border-b border-outline-variant/10">
+                  <div className="flex flex-col sm:flex-row sm:justify-between gap-xs py-xs border-b border-outline-variant/10">
                     <span className="text-on-surface-variant text-body-md">Service</span>
                     <span className="text-primary font-bold">{service || '—'}</span>
                   </div>
-                  <div className="flex justify-between py-xs border-b border-outline-variant/10">
+                  <div className="flex flex-col sm:flex-row sm:justify-between gap-xs py-xs border-b border-outline-variant/10">
                     <span className="text-on-surface-variant text-body-md">Date</span>
                     <span className="text-primary font-bold">{date || '—'}</span>
                   </div>
-                  <div className="flex justify-between py-xs border-b border-outline-variant/10">
+                  <div className="flex flex-col sm:flex-row sm:justify-between gap-xs py-xs border-b border-outline-variant/10">
                     <span className="text-on-surface-variant text-body-md">Heure</span>
                     <span className="text-primary font-bold">{time || '—'}</span>
                   </div>
-                  <div className="flex justify-between py-xs border-b border-outline-variant/10">
+                  <div className="flex flex-col sm:flex-row sm:justify-between gap-xs py-xs border-b border-outline-variant/10">
                     <span className="text-on-surface-variant text-body-md">Client</span>
                     <span className="text-primary font-bold">{customerName || '—'}</span>
                   </div>
-                  <div className="flex justify-between py-xs">
+                  <div className="flex flex-col sm:flex-row sm:justify-between gap-xs py-xs">
                     <span className="text-on-surface-variant text-body-md">Téléphone</span>
                     <span className="text-primary font-bold">{customerPhone || '—'}</span>
                   </div>
@@ -321,12 +321,12 @@ export default function BookingWizard({ services = [], csrfToken = '', formError
           </div>
       </form>
 
-      <div className="mt-lg flex justify-between items-center">
+      <div className="mt-md md:mt-lg flex flex-col-reverse sm:flex-row sm:justify-between sm:items-center gap-sm">
         {step > 1 ? (
           <button
             type="button"
             onClick={() => setStep(step - 1)}
-            className="flex items-center gap-xs font-label-md text-on-surface-variant hover:text-primary transition-colors px-md py-sm rounded-full"
+            className="w-full sm:w-auto flex items-center justify-center gap-xs font-label-md text-on-surface-variant hover:text-primary transition-colors px-md py-sm rounded-full"
           >
             <span className="material-symbols-outlined">arrow_back</span>
             Retour
@@ -334,11 +334,11 @@ export default function BookingWizard({ services = [], csrfToken = '', formError
         ) : (
           <span />
         )}
-        <div className="flex-grow" />
+        <div className="hidden sm:block flex-grow" />
         <button
           type="submit"
           form="booking-form"
-          className="bg-primary text-on-primary px-lg py-sm rounded-full font-label-md hover:shadow-lg active:scale-95 transition-all flex items-center gap-xs"
+          className="w-full sm:w-auto bg-primary text-on-primary px-lg py-sm rounded-full font-label-md hover:shadow-lg active:scale-95 transition-all flex items-center justify-center gap-xs"
         >
           {isLastStep ? 'Confirmer la réservation' : 'Continuer'}
           <span className="material-symbols-outlined">{isLastStep ? 'check_circle' : 'arrow_forward'}</span>

@@ -54,6 +54,8 @@ def update_booking_status(request, pk):
         booking.status = new_status
         booking.save()
         messages.success(request, f'Réservation #{pk} mise à jour.')
+    else:
+        messages.error(request, f'Impossible de mettre à jour la réservation #{pk}.')
     return redirect('manage_bookings')
 
 
@@ -62,6 +64,8 @@ def toggle_paid(request, pk):
     booking = get_object_or_404(Booking, pk=pk)
     booking.paid = not booking.paid
     booking.save()
+    state = 'payée' if booking.paid else 'marquée non payée'
+    messages.success(request, f'Réservation #{pk} {state}.')
     return redirect('manage_bookings')
 
 
@@ -70,6 +74,8 @@ def toggle_confirmed(request, pk):
     booking = get_object_or_404(Booking, pk=pk)
     booking.confirmed = not booking.confirmed
     booking.save()
+    state = 'confirmée' if booking.confirmed else 'marquée non confirmée'
+    messages.success(request, f'Réservation #{pk} {state}.')
     return redirect('manage_bookings')
 
 
@@ -82,6 +88,7 @@ def edit_booking(request, pk):
             form.save()
             messages.success(request, f'Réservation #{pk} modifiée.')
             return redirect('manage_bookings')
+        messages.error(request, f'Veuillez corriger la réservation #{pk}.')
     else:
         form = BookingForm(instance=booking)
     return render(request, 'dashboard/edit_booking.html', {'form': form, 'booking': booking})
@@ -97,6 +104,7 @@ def manage_services(request):
             form.save()
             messages.success(request, 'Service ajouté.')
             return redirect('manage_services')
+        messages.error(request, 'Veuillez corriger les champs du service.')
     return render(request, 'dashboard/services.html', {'services': services, 'form': form})
 
 
@@ -105,6 +113,8 @@ def toggle_service(request, pk):
     service = get_object_or_404(Service, pk=pk)
     service.is_active = not service.is_active
     service.save()
+    state = 'visible' if service.is_active else 'masqué'
+    messages.success(request, f'Service "{service.name}" {state}.')
     return redirect('manage_services')
 
 
