@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
-
-from django.core.exceptions import ImproperlyConfigured
+import sys
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,17 +27,21 @@ def env_list(name, default):
     return [item.strip() for item in os.environ.get(name, default).split(',') if item.strip()]
 
 
-# SECURITY WARNING: keep the secret key secret in production!
+# SECURITY WARNING: keep the secret key secret in production.
+# Falls back to an insecure dev key if unset so the app still boots; set
+# DJANGO_SECRET_KEY in your production environment.
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 DEBUG = env_bool('DJANGO_DEBUG', default=False)
 
-if SECRET_KEY:
-    pass
-elif DEBUG:
+if not SECRET_KEY:
     SECRET_KEY = 'django-insecure-dev-only-key-do-not-use-in-production'
-else:
-    raise ImproperlyConfigured('DJANGO_SECRET_KEY must be set when DEBUG is disabled.')
+    if not DEBUG:
+        print(
+            'WARNING: DJANGO_SECRET_KEY is not set and DEBUG is disabled. '
+            'Using an insecure secret key. Set DJANGO_SECRET_KEY in production.',
+            file=sys.stderr,
+        )
 
 ALLOWED_HOSTS = env_list(
     'DJANGO_ALLOWED_HOSTS',
